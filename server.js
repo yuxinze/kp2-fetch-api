@@ -29,7 +29,7 @@ app.get('/api/fetch', async (req, res) => {
   const isWeChat = /weixin\.qq\.com|mp\.weixin/i.test(targetUrl);
 
   // Run Puppeteer in a child process — prevents Chromium from killing our server
-  const scriptPath = path.join(__dirname, isWeChat ? 'fetch_wechat.js' : 'fetch_regular.js');
+  const scriptPath = path.join(__dirname, isWeChat ? 'fetch_wechat.mjs' : 'fetch_regular.mjs');
   const args = isWeChat && keyword ? [scriptPath, targetUrl, keyword] : [scriptPath, targetUrl];
   
   execFile(

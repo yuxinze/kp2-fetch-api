@@ -1,10 +1,10 @@
 /**
- * fetch_regular.js — Child process script for fetching regular URLs
- * Usage: node fetch_regular.js <url>
+ * fetch_regular.mjs — Child process script for fetching regular URLs (ESM)
+ * Usage: node fetch_regular.mjs <url>
  * Output: JSON { title, text, images, url } to stdout
  */
 
-const puppeteer = require('puppeteer');
+import puppeteer from 'puppeteer';
 
 const targetUrl = process.argv[2];
 
