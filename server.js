@@ -1,18 +1,23 @@
 /**
  * kp2-fetch-api — Node.js + Puppeteer URL content fetcher (Render deployment)
+ * ESM format (type: module) — compatible with puppeteer v25+
  * Uses child_process to isolate Puppeteer (Chromium kills the parent Node process)
- * 
+ *
  * GET /api/fetch?url=<encoded_url>&keyword=<optional_keyword>
  * Returns: { title, text, images[], url }
  */
 
-const express = require('express');
-const cors = require('cors');
-const { execFile } = require('child_process');
-const path = require('path');
+import express from 'express';
+import cors from 'cors';
+import { execFile } from 'child_process';
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const app = express();
-const PORT = process.env.PORT || 8080;
+const PORT = process.env.PORT || 10000;
 
 app.use(cors());
 
@@ -31,7 +36,7 @@ app.get('/api/fetch', async (req, res) => {
   // Run Puppeteer in a child process — prevents Chromium from killing our server
   const scriptPath = path.join(__dirname, isWeChat ? 'fetch_wechat.mjs' : 'fetch_regular.mjs');
   const args = isWeChat && keyword ? [scriptPath, targetUrl, keyword] : [scriptPath, targetUrl];
-  
+
   execFile(
     'node',
     args,
